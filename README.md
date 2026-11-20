@@ -27,26 +27,27 @@ Prompt engineering is traditionally done "by feel" — tweaking phrases and test
 
 ```mermaid
 flowchart TD
-    Raw["Raw Prompt (with {{placeholders}})"] --> A["[Stage A] SuitabilityClassifier<br/><i>Objective / PartlyCheckable / Subjective</i>"]
-    A --> B["[Stage B] RubricDrafter<br/><i>Infers criteria & weights</i>"]
-    B --> Human1{{"✋ User Approves/Edits Rubric"}}
-    Human1 --> C["[Stage C] TestInputGenerator<br/><i>Generates ~25 realistic test cases</i>"]
-    C --> Splitter["DatasetSplitter"]
+    Raw["Raw Prompt with Input Placeholders"] --> A["Stage A: Suitability Classifier"]
+    A --> B["Stage B: Rubric Drafter"]
+    B --> Human["User Approves / Edits Rubric"]
+    Human --> C["Stage C: Test Input Generator"]
+    C --> Splitter["Dataset Splitter"]
     Splitter --> OptSet["Optimization Set (~80%)"]
-    Splitter --> HeldOutSet["Held-Out Set (~20%)<br/><b>(Strictly Quarantined)</b>"]
-    
-    subgraph Loop["Optimization Loop (3-5 Rounds)"]
-        D["[Stage D] Runner & Grader<br/><i>Deterministic Checks + LLM Judge</i>"]
-        E["[Stage E] FailureAnalyzer & PromptRewriter<br/><i>Group failure patterns + targeted diffs</i>"]
-        F{"[Stage F] Stopping Rules<br/><i>Target reached / Plateau / Budget / Max rounds</i>"}
-        D --> E --> F
-        F -- "Continue" --> D
+    Splitter --> HeldOutSet["Held-Out Set (~20% Quarantined)"]
+
+    subgraph Loop ["Optimization Loop (3-5 Rounds)"]
+        D["Stage D: Runner & Deterministic Checks / LLM Judge"]
+        E["Stage E: Failure Analyzer & Prompt Rewriter"]
+        F{"Stage F: Stopping Rules Met?"}
+        D --> E
+        E --> F
+        F -- "Next Round" --> D
     end
 
-    OptSet --> Loop
-    Loop -- "Best Candidate" --> G["[Stage G] HeldOutValidator<br/><i>Original vs Best on Held-Out set only</i>"]
+    OptSet --> D
+    F -- "Best Candidate" --> G["Stage G: Held-Out Validator"]
     HeldOutSet --> G
-    G --> H["[Stage H] ReportBuilder<br/><i>report.html + CLI diff & summary</i>"]
+    G --> H["Stage H: HTML Report & CLI Output"]
 ```
 
 ---
