@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PromptOptimizer/PromptOptimizer.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PromptOptimizer.Tests/PromptOptimizer.Tests.csproj" />
+  </Folder>
+</Solution>

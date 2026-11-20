@@ -1,0 +1,1142 @@
+[
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-01",
+    "outputs": [
+      "{\n\u0022invoice_number\u0022: \u0022INV-2025-001\u0022,\n\u0022vendor_name\u0022: \u0022Acme Software Solutions\u0022,\n\u0022total_amount\u0022: 1650.00,\n\u0022due_date\u0022: \u00222025-02-14\u0022,\n\u0022line_items\u0022: [\n{\u0022description\u0022: \u0022Software License\u0022, \u0022amount\u0022: 1200.00},\n{\u0022description\u0022: \u0022Support Package\u0022, \u0022amount\u0022: 300.00}\n]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is correctly formatted as YYYY-MM-DD and matches the invoice\u0027s specified due date."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "The line_items array contains objects with description strings and amount numbers, capturing both itemized charges accurately."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values exactly match the source invoice text without fabrication, hallucination, or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 300,
+    "estimatedCost": 0.00008325
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-02",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022C-9876\u0022,\n  \u0022vendor_name\u0022: \u0022Jane Doe Consulting\u0022,\n  \u0022total_amount\u0022: 1000.00,\n  \u0022due_date\u0022: \u00222025-03-15\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Strategy session (2 hrs @ $200/hr)\u0022,\n      \u0022amount\u0022: 400.00\n    },\n    {\n      \u0022description\u0022: \u0022Report writing\u0022,\n      \u0022amount\u0022: 600.00\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is a string strictly formatted as YYYY-MM-DD and matches the due date in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 0.9,
+        "passed": true,
+        "reason": "line_items is an array of objects with description and amount, but the first description includes extras not in the expected hint, though it does not fabricate data."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values match the source invoice text without fabrication, hallucination, or omission."
+      }
+    ],
+    "aggregateScore": 0.6900000000000001,
+    "tokensUsed": 430,
+    "estimatedCost": 0.00017430
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-03",
+    "outputs": [
+      "{\n\u0022invoice_number\u0022: \u002254321\u0022,\n\u0022vendor_name\u0022: \u0022Office Supplies Co.\u0022,\n\u0022total_amount\u0022: 145.00,\n\u0022due_date\u0022: \u00222025-02-09\u0022,\n\u0022line_items\u0022: [\n{\u0022description\u0022: \u0022Printer Paper (10 reams)\u0022, \u0022amount\u0022: 50.00},\n{\u0022description\u0022: \u0022Ink Cartridges (2)\u0022, \u0022amount\u0022: 80.00},\n{\u0022description\u0022: \u0022Stapler\u0022, \u0022amount\u0022: 15.00}\n]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is correctly formatted as YYYY-MM-DD and matches the invoice\u0027s Due Date: 2025-02-09."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of objects with description (string) and amount (numeric) fields, capturing all three itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values match the source invoice text without fabrication, hallucination, or omission of material values."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 304,
+    "estimatedCost": 0.00009150
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-04",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022F-2025-042\u0022,\n  \u0022vendor_name\u0022: \u0022John Smith Design\u0022,\n  \u0022total_amount\u0022: 750.00,\n  \u0022due_date\u0022: \u00222025-04-30\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Logo design\u0022,\n      \u0022amount\u0022: 750.00\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is correctly formatted as YYYY-MM-DD and matches the due date in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array with one object containing exactly description (string) and amount (numeric), capturing the single line item correctly."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values exactly match the source invoice text without fabrication, hallucination, or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 348,
+    "estimatedCost": 0.00013095
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-06",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u00222025-001\u0022,\n  \u0022vendor_name\u0022: \u0022Construction Supplies Inc.\u0022,\n  \u0022total_amount\u0022: 800.00,\n  \u0022due_date\u0022: \u00222025-03-10\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Cement (50 bags)\u0022,\n      \u0022amount\u0022: 500.00\n    },\n    {\n      \u0022description\u0022: \u0022Sand (10 tons)\u0022,\n      \u0022amount\u0022: 300.00\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is correctly formatted as YYYY-MM-DD and matches the invoice\u0027s stated due date."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "The line_items is an array of objects with description and amount, capturing both itemized charges exactly."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values directly match the source invoice text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 478,
+    "estimatedCost": 0.00020085
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-07",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022WS-2025-003\u0022,\n  \u0022vendor_name\u0022: \u0022Web Services LLC\u0022,\n  \u0022total_amount\u0022: 203.5,\n  \u0022due_date\u0022: \u00222025-05-15\u0022,\n  \u0022line_items\u0022: [\n    {\u0022description\u0022: \u0022Domain registration (1 year)\u0022, \u0022amount\u0022: 15.0},\n    {\u0022description\u0022: \u0022Hosting (12 months)\u0022, \u0022amount\u0022: 120.0},\n    {\u0022description\u0022: \u0022SSL Certificate\u0022, \u0022amount\u0022: 50.0}\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is a string \u00272025-05-15\u0027 that strictly follows the YYYY-MM-DD format and matches the due date stated in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of three objects, each with description (string) and amount (numeric), capturing all itemized charges from the invoice."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice number, vendor name, total amount, due date, and line item details) exactly match the source invoice text without any fabrication, hallucination, or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 320,
+    "estimatedCost": 0.0000975
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-10",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022\u0022,\n  \u0022vendor_name\u0022: \u0022XYZ Corp\u0022,\n  \u0022total_amount\u0022: 250.00,\n  \u0022due_date\u0022: \u00222025-03-15\u0022,\n  \u0022line_items\u0022: []\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is \u00222025-03-15\u0022, which is a string strictly formatted as YYYY-MM-DD and matches the due date stated in the text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an empty array, which correctly matches the absence of itemized charges in the source text."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (empty invoice_number, vendor_name \u0022XYZ Corp\u0022, total_amount 250.00, due_date \u00222025-03-15\u0022, and empty line_items) exactly match the source invoice text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 188,
+    "estimatedCost": 0.00004935
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-11",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022LONG-2025-001\u0022,\n  \u0022vendor_name\u0022: \u0022Mega Supplies Corp.\u0022,\n  \u0022total_amount\u0022: 2100.00,\n  \u0022due_date\u0022: \u00222025-02-01\u0022,\n  \u0022line_items\u0022: [\n    { \u0022description\u0022: \u0022Item A\u0022, \u0022amount\u0022: 10.00 },\n    { \u0022description\u0022: \u0022Item B\u0022, \u0022amount\u0022: 20.00 },\n    { \u0022description\u0022: \u0022Item C\u0022, \u0022amount\u0022: 30.00 },\n    { \u0022description\u0022: \u0022Item D\u0022, \u0022amount\u0022: 40.00 },\n    { \u0022description\u0022: \u0022Item E\u0022, \u0022amount\u0022: 50.00 },\n    { \u0022description\u0022: \u0022Item F\u0022, \u0022amount\u0022: 60.00 },\n    { \u0022description\u0022: \u0022Item G\u0022, \u0022amount\u0022: 70.00 },\n    { \u0022description\u0022: \u0022Item H\u0022, \u0022amount\u0022: 80.00 },\n    { \u0022description\u0022: \u0022Item I\u0022, \u0022amount\u0022: 90.00 },\n    { \u0022description\u0022: \u0022Item J\u0022, \u0022amount\u0022: 100.00 },\n    { \u0022description\u0022: \u0022Item K\u0022, \u0022amount\u0022: 110.00 },\n    { \u0022description\u0022: \u0022Item L\u0022, \u0022amount\u0022: 120.00 },\n    { \u0022description\u0022: \u0022Item M\u0022, \u0022amount\u0022: 130.00 },\n    { \u0022description\u0022: \u0022Item N\u0022, \u0022amount\u0022: 140.00 },\n    { \u0022description\u0022: \u0022Item O\u0022, \u0022amount\u0022: 150.00 },\n    { \u0022description\u0022: \u0022Item P\u0022, \u0022amount\u0022: 160.00 },\n    { \u0022description\u0022: \u0022Item Q\u0022, \u0022amount\u0022: 170.00 },\n    { \u0022description\u0022: \u0022Item R\u0022, \u0022amount\u0022: 180.00 },\n    { \u0022description\u0022: \u0022Item S\u0022, \u0022amount\u0022: 190.00 },\n    { \u0022description\u0022: \u0022Item T\u0022, \u0022amount\u0022: 200.00 }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is a string in YYYY-MM-DD format matching the due date stated in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of 20 objects each with a description string and amount numeric, capturing all itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values exactly match the source invoice text without fabrication, hallucination, or omission of material values."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 909,
+    "estimatedCost": 0.00037665
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-12",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022TERMS-2025-002\u0022,\n  \u0022vendor_name\u0022: \u0022Legal Services LLP\u0022,\n  \u0022total_amount\u0022: 1250.00,\n  \u0022due_date\u0022: \u00222025-02-04\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Legal consultation\u0022,\n      \u0022amount\u0022: 500.00\n    },\n    {\n      \u0022description\u0022: \u0022Document review\u0022,\n      \u0022amount\u0022: 750.00\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date value \u00272025-02-04\u0027 is a string in YYYY-MM-DD format and matches the due date stated in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of two objects, each with exactly description (string) and amount (numeric), and captures all itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values exactly match the source invoice text without fabrication, hallucination, or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 416,
+    "estimatedCost": 0.00010785
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-13",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022EMAIL-2025-001\u0022,\n  \u0022vendor_name\u0022: \u0022Creative Agency\u0022,\n  \u0022total_amount\u0022: 3500.00,\n  \u0022due_date\u0022: \u00222025-02-28\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Website redesign\u0022,\n      \u0022amount\u0022: 2500.00\n    },\n    {\n      \u0022description\u0022: \u0022Monthly maintenance\u0022,\n      \u0022amount\u0022: 1000.00\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is a string \u00272025-02-28\u0027 which matches the YYYY-MM-DD format and exactly corresponds to the due date stated in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of two objects, each with description (string) and amount (numeric), correctly capturing all itemized charges (Website redesign $2500.00, Monthly maintenance $1000.00) from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice_number \u0027EMAIL-2025-001\u0027, vendor_name \u0027Creative Agency\u0027, total_amount 3500.00, due_date \u00272025-02-28\u0027, line items with descriptions and amounts) match the source text exactly without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 747,
+    "estimatedCost": 0.00030105
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-14",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor X\u0022,\n  \u0022total_amount\u0022: 500,\n  \u0022due_date\u0022: \u00222025-04-01\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Consulting\u0022,\n      \u0022amount\u0022: 500\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is a string in YYYY-MM-DD format and matches the due date stated in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array with one object containing description (string) and amount (numeric), capturing the Consulting charge."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice_number, vendor_name, total_amount, due_date, line_items) match the source text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 330,
+    "estimatedCost": 0.00013230
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-15",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u00221234\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor Y\u0022,\n  \u0022total_amount\u0022: 1200.0,\n  \u0022due_date\u0022: \u00222025-01-01\u0022,\n  \u0022line_items\u0022: [\n    { \u0022description\u0022: \u0022Service A\u0022, \u0022amount\u0022: 700.0 },\n    { \u0022description\u0022: \u0022Service B\u0022, \u0022amount\u0022: 500.0 }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 0,
+        "passed": false,
+        "reason": "The due date is fabricated as 2025-01-01 because no invoice date exists, but the instruction says to use invoice date \u002B30 days if missing; here there is no invoice date, so using the default is allowed, but the format is correct, so I should have scored higher."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of objects with correct description (string) and amount (numeric) fields, capturing all itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 0.9,
+        "passed": true,
+        "reason": "All values except due_date match the source text; the due_date is fabricated as 2025-01-01 per the fallback rule since no invoice date exists, so it is faithful to the instruction."
+      }
+    ],
+    "aggregateScore": 0.5900000000000001,
+    "tokensUsed": 236,
+    "estimatedCost": 0.00007500
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-16",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u00225678\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor Z\u0022,\n  \u0022total_amount\u0022: 300,\n  \u0022due_date\u0022: \u00222025-01-01\u0022,\n  \u0022line_items\u0022: [\n    {\u0022description\u0022: \u0022Widget\u0022, \u0022amount\u0022: 150},\n    {\u0022description\u0022: \u0022Gadget\u0022, \u0022amount\u0022: 150}\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 0,
+        "passed": false,
+        "reason": "The due_date \u00272025-01-01\u0027 is not stated or implied in the invoice text, which contains no date, so it fails to represent a due date from the source."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "The line_items array correctly contains two objects with description and amount fields, capturing all itemized charges (Widget and Gadget) from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 0.8,
+        "passed": true,
+        "reason": "Most extracted values (invoice number, vendor name, total amount, line items) match the source, but the due_date is a fabrication as no date exists in the text."
+      }
+    ],
+    "aggregateScore": 0.5800000000000002,
+    "tokensUsed": 397,
+    "estimatedCost": 0.00017205
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-18",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022123\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor A\u0022,\n  \u0022total_amount\u0022: 100,\n  \u0022due_date\u0022: \u00222025-06-01\u0022,\n  \u0022line_items\u0022: []\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is \u00272025-06-01\u0027, a valid YYYY-MM-DD string matching the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an empty array as expected since no line items appear in the invoice text."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice_number: \u0027123\u0027, vendor_name: \u0027Vendor A\u0027, total_amount: 100, due_date: \u00272025-06-01\u0027, line_items: []) exactly match the source invoice text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 200,
+    "estimatedCost": 0.00005160
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-19",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022456\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor B\u0022,\n  \u0022total_amount\u0022: 200,\n  \u0022due_date\u0022: \u00222025-07-01\u0022,\n  \u0022line_items\u0022: []\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is a string \u00272025-07-01\u0027 conforming to YYYY-MM-DD format and matches the due date in the text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an empty array as expected since no line items were present in the text."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice_number \u0027456\u0027, vendor_name \u0027Vendor B\u0027, total_amount 200, due_date \u00272025-07-01\u0027, line_items []) are faithfully derived from the source text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 198,
+    "estimatedCost": 0.0000513
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-20",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022789\u0022,\n  \u0022vendor_name\u0022: \u0022Vendor C\u0022,\n  \u0022total_amount\u0022: -50,\n  \u0022due_date\u0022: \u00222025-08-01\u0022,\n  \u0022line_items\u0022: [\n    {\u0022description\u0022: \u0022Refund\u0022, \u0022amount\u0022: -50}\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is a string strictly formatted as YYYY-MM-DD and exactly matches the stated due date 2025-08-01."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array containing one object with description \u0027Refund\u0027 (string) and amount -50 (numeric), correctly capturing the single itemized charge."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice number \u0027789\u0027, vendor name \u0027Vendor C\u0027, total amount -50, due date 2025-08-01, line item description \u0027Refund\u0027 and amount -50) faithfully match the source invoice text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 475,
+    "estimatedCost": 0.00021705
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-22",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u002212345\u0022,\n  \u0022vendor_name\u0022: \u0022Compa\u00F1\u00EDa XYZ\u0022,\n  \u0022total_amount\u0022: 1234.56,\n  \u0022due_date\u0022: \u00222025-11-15\u0022,\n  \u0022line_items\u0022: [\n    {\n      \u0022description\u0022: \u0022Servicio\u0022,\n      \u0022amount\u0022: 1234.56\n    }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "The due_date is \u00222025-11-15\u0022, which is a string in strict YYYY-MM-DD format and exactly matches the due date implied by the invoice text \u002215/11/2025\u0022."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array containing one object with description \u0022Servicio\u0022 (string) and amount 1234.56 (numeric), capturing the single itemized charge from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice_number \u002212345\u0022, vendor_name \u0022Compa\u00F1\u00EDa XYZ\u0022, total_amount 1234.56, due_date \u00222025-11-15\u0022, and line_items with description \u0022Servicio\u0022 and amount 1234.56) match the source invoice text without any fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 248,
+    "estimatedCost": 0.00007185
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-23",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u0022INV-2025/001\u0022,\n  \u0022vendor_name\u0022: \u0022A\u0026B Co.\u0022,\n  \u0022total_amount\u0022: 1500.0,\n  \u0022due_date\u0022: \u00222025-12-31\u0022,\n  \u0022line_items\u0022: [\n    {\u0022description\u0022: \u0022Item 1\u0022, \u0022amount\u0022: 1000.0},\n    {\u0022description\u0022: \u0022Item 2\u0022, \u0022amount\u0022: 500.0}\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is \u00222025-12-31\u0022, a valid YYYY-MM-DD string correctly derived from the due date \u002231-12-2025\u0022 in the invoice text."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of two objects, each with a string description and numeric amount, capturing both itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice number, vendor name, total amount, due date, line items) exactly match the source invoice text without fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 1317,
+    "estimatedCost": 0.00067410
+  },
+  {
+    "candidateId": "round-1",
+    "testCaseId": "tc-24",
+    "outputs": [
+      "{\n  \u0022invoice_number\u0022: \u002298765\u0022,\n  \u0022vendor_name\u0022: \u0022Tech Solutions Inc.\u0022,\n  \u0022total_amount\u0022: 5000.00,\n  \u0022due_date\u0022: \u00222025-12-31\u0022,\n  \u0022line_items\u0022: [\n    { \u0022description\u0022: \u0022Consulting\u0022, \u0022amount\u0022: 3000 },\n    { \u0022description\u0022: \u0022Support\u0022, \u0022amount\u0022: 2000 }\n  ]\n}"
+    ],
+    "criterionScores": [
+      {
+        "criterionId": "json-valid",
+        "score": 1,
+        "passed": true,
+        "reason": "Output is valid JSON."
+      },
+      {
+        "criterionId": "required-fields",
+        "score": 1,
+        "passed": true,
+        "reason": "All 5 required fields found."
+      },
+      {
+        "criterionId": "no-markdown-fence",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-markdown-fence\u0027."
+      },
+      {
+        "criterionId": "no-conversational-preamble",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027no-conversational-preamble\u0027."
+      },
+      {
+        "criterionId": "total-amount-numeric",
+        "score": 0,
+        "passed": false,
+        "reason": "No deterministic check registered for type \u0027total-amount-numeric\u0027."
+      },
+      {
+        "criterionId": "due-date-format",
+        "score": 1,
+        "passed": true,
+        "reason": "due_date is \u00272025-12-31\u0027, correctly formatted as YYYY-MM-DD and matches the invoice\u0027s stated due date."
+      },
+      {
+        "criterionId": "line-items-structure",
+        "score": 1,
+        "passed": true,
+        "reason": "line_items is an array of two objects with exactly description and numeric amount fields, capturing both itemized charges from the source."
+      },
+      {
+        "criterionId": "extraction-faithfulness",
+        "score": 1,
+        "passed": true,
+        "reason": "All extracted values (invoice number, vendor, total amount, due date, line item descriptions and amounts) exactly match the source invoice text with no fabrication or omission."
+      }
+    ],
+    "aggregateScore": 0.7000000000000001,
+    "tokensUsed": 268,
+    "estimatedCost": 0.00007845
+  }
+]

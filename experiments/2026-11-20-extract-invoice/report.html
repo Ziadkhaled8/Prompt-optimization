@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Prompt Optimizer Report — 2026-11-20-extract-invoice</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; max-width: 1200px; margin: 0 auto; padding: 2rem; color: #1a1a2e; background: #f5f5f7; }
+  h1 { color: #16213e; border-bottom: 3px solid #0f3460; padding-bottom: 0.5rem; }
+  h2 { color: #16213e; margin-top: 2rem; }
+  .meta { color: #666; font-size: 0.9rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  th { background: #16213e; color: white; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  .score-high { background: #d4edda; color: #155724; font-weight: bold; }
+  .score-mid { background: #fff3cd; color: #856404; }
+  .score-low { background: #f8d7da; color: #721c24; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .prompt-box { background: white; border-radius: 8px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .prompt-box-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .prompt-box-header h3 { margin: 0; }
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #0f3460;
+    background: #eef2f6;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .copy-btn:hover { background: #e2e8f0; border-color: #94a3b8; }
+  .copy-btn-primary { background: #28a745; color: #ffffff; border-color: #218838; }
+  .copy-btn-primary:hover { background: #218838; border-color: #1e7e34; }
+  .copy-btn.copied, .copy-btn-primary.copied { background: #155724 !important; color: #ffffff !important; border-color: #0e3e18 !important; }
+  .prompt-box pre { white-space: pre-wrap; word-wrap: break-word; background: #f8f9fa; padding: 1rem; border-radius: 4px; font-size: 0.85rem; }
+  .original h3 { color: #6c757d; }
+  .optimized h3 { color: #28a745; }
+  .changelog { font-size: 0.85rem; color: #495057; background: #e9ecef; padding: 0.5rem; border-radius: 4px; }
+  .warning { color: #856404; background: #fff3cd; padding: 0.5rem; border-radius: 4px; }
+  .good { color: #155724; background: #d4edda; padding: 0.5rem; border-radius: 4px; }
+
+  /* Optimization History styles */
+  .history-card { background: white; border-radius: 8px; padding: 1.25rem; box-shadow: 0 2px 4px rgba(0,0,0,0.08); margin: 1rem 0 2rem 0; }
+  .history-desc { color: #4b5563; font-size: 0.92rem; margin: 0 0 0.75rem 0; line-height: 1.5; }
+  .history-legend { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin: 0.75rem 0 1.25rem 0; padding: 0.65rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.85rem; }
+  .legend-item { display: inline-flex; align-items: center; gap: 0.45rem; color: #334155; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  .legend-target-line { width: 16px; height: 0; border-top: 2px dashed #0f3460; display: inline-block; }
+  .round-history-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .round-card { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem 1rem; }
+  .round-card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem; }
+  .round-title { display: flex; align-items: center; gap: 0.5rem; }
+  .round-badge { font-weight: 700; font-size: 0.9rem; color: #0f3460; }
+  .candidate-pill { background: #e2e8f0; color: #475569; font-size: 0.78rem; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+  .baseline-pill { background: #0f3460; color: white; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .round-metrics { display: flex; align-items: center; flex-wrap: wrap; gap: 0.65rem; font-size: 0.82rem; }
+  .metric-score strong { color: #0f3460; font-size: 0.95rem; }
+  .metric-percent { color: #64748b; font-size: 0.8rem; }
+  .delta-pill { padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+  .delta-positive { background: #d4edda; color: #155724; }
+  .delta-negative { background: #f8d7da; color: #721c24; }
+  .delta-neutral { background: #e2e8f0; color: #475569; }
+  .delta-prev { font-size: 0.75rem; color: #64748b; }
+  .metric-criteria { color: #475569; }
+  .metric-cost { color: #64748b; }
+  .bar-track-wrapper { position: relative; margin: 6px 0; }
+  .bar-track { position: relative; background: #e2e8f0; border-radius: 6px; height: 26px; display: flex; align-items: center; overflow: visible; }
+  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; justify-content: flex-end; padding: 0 8px; box-sizing: border-box; font-weight: 600; font-size: 0.8rem; min-width: 3px; }
+  .bar-high { background: linear-gradient(90deg, #28a745, #34ce57); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .bar-mid { background: linear-gradient(90deg, #e0a800, #ffc107); color: #1a1a2e; }
+  .bar-low { background: linear-gradient(90deg, #dc3545, #e4606d); color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
+  .bar-label.inside { white-space: nowrap; }
+  .bar-label.outside { position: absolute; font-size: 0.8rem; font-weight: 600; color: #1e293b; white-space: nowrap; }
+  .target-line { position: absolute; top: -3px; bottom: -3px; width: 0; border-left: 2px dashed #0f3460; z-index: 2; pointer-events: none; }
+  .round-changelog { margin-top: 0.5rem; padding: 0.5rem 0.75rem; background: #f1f5f9; border-left: 3px solid #3b82f6; border-radius: 0 4px 4px 0; font-size: 0.82rem; color: #334155; line-height: 1.4; }
+  .history-axis { position: relative; margin-top: 6px; padding-top: 4px; }
+  .axis-scale { position: relative; height: 22px; border-top: 1px solid #cbd5e1; }
+  .axis-mark { position: absolute; top: 0; transform: translateX(-50%); font-size: 0.75rem; color: #64748b; padding-top: 3px; }
+  .axis-mark::before { content: ""; position: absolute; top: 0; left: 50%; width: 1px; height: 4px; background: #cbd5e1; }
+  .axis-mark.mark-start { transform: translateX(0); left: 0; }
+  .axis-mark.mark-start::before { left: 0; }
+  .axis-mark.mark-end { transform: translateX(-100%); left: 100%; }
+  .axis-mark.mark-end::before { left: 100%; }
+
+  /* Backward compatibility */
+  .round-history { margin: 1rem 0; }
+  .round-bar { display: flex; align-items: center; margin: 4px 0; }
+  .round-label { width: 3rem; font-weight: bold; }
+  .bar-container { flex: 1; background: #e9ecef; border-radius: 4px; height: 24px; }
+  .bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding: 0 8px; font-size: 0.8rem; color: white; min-width: 60px; }
+</style>
+</head><body>
+<h1>🔬 Prompt Optimization Report</h1>
+<p class="meta">Experiment: <strong>2026-11-20-extract-invoice</strong> | Created: 2026-11-20 18:21 | Total cost: $0.0088</p>
+<h2>📋 Suitability</h2>
+<p><strong>Objective</strong>: The task is a structured data extraction with explicitly specified fields, formats, and output constraints, all of which can be verified programmatically against the source text.</p>
+<h2>📝 Prompt Comparison</h2>
+<div class="comparison">
+  <div class="prompt-box original">
+    <div class="prompt-box-header">
+      <h3>Original (Round 0)</h3>
+      <button type="button" class="copy-btn" onclick="copyPrompt('original-prompt-text', this)" title="Copy original prompt">
+        <span>📋 Copy</span>
+      </button>
+    </div>
+    <pre id="original-prompt-text">Extract invoice details from the text below.
+Return a valid JSON object containing:
+- invoice_number (string)
+- vendor_name (string)
+- total_amount (numeric)
+- due_date (YYYY-MM-DD)
+- line_items (list of objects with description and amount)
+
+Do not include conversational preamble or markdown code fences.
+
+Invoice text:
+{{invoice_text}}
+</pre>
+  </div>
+  <div class="prompt-box optimized">
+    <div class="prompt-box-header">
+      <h3>Optimized (Round 2)</h3>
+      <button type="button" class="copy-btn copy-btn-primary" onclick="copyPrompt('optimized-prompt-text', this)" title="Copy optimized prompt">
+        <span>📋 Copy Prompt</span>
+      </button>
+    </div>
+    <pre id="optimized-prompt-text">Extract invoice details from the text below.
+Return a valid JSON object containing:
+- invoice_number (string; if missing, use &quot;&quot;)
+- vendor_name (string)
+- total_amount (numeric; ensure output is a JSON number, not a string)
+- due_date (YYYY-MM-DD string; if missing, use the invoice date +30 days, or if no date exists, use &quot;2025-01-01&quot;)
+- line_items (list of objects with description and amount; if missing, use [])
+
+Do not include conversational preamble or markdown code fences.
+
+Invoice text:
+{{invoice_text}}
+
+Rubric:
+  Task: Extract structured invoice fields (invoice number, vendor name, total amount, due date, and line items) from raw invoice text and return them as a bare, valid JSON object with no preamble or markdown fences.
+  Output shape: A single valid JSON object (no surrounding prose or code fences) with keys: invoice_number (string), vendor_name (string), total_amount (number), due_date (string in YYYY-MM-DD), line_items (array of objects each having description (string) and amount (number)).
+  Criteria: json-valid (Deterministic), required-fields (Deterministic), no-markdown-fence (Deterministic), no-conversational-preamble (Deterministic), total-amount-numeric (Deterministic), due-date-format (Judged), line-items-structure (Judged), extraction-faithfulness (Judged)</pre>
+    <p class="changelog"><strong>Changes:</strong> Added explicit instruction that total_amount must be a JSON number, not a string, to ensure the model outputs a numeric type and thus passes the total-amount-numeric check. The rest of the prompt remains unchanged.</p>
+  </div>
+</div>
+<h2>📊 Score Summary</h2>
+<table><thead><tr><th>Round</th><th>Candidate</th><th>Mean Score</th>
+<th>json-valid</th>
+<th>required-fields</th>
+<th>no-markdown-fence</th>
+<th>no-conversational-preamble</th>
+<th>total-amount-numeric</th>
+<th>due-date-format</th>
+<th>line-items-structure</th>
+<th>extraction-faithfulness</th>
+<th>Cost</th></tr></thead><tbody>
+<tr><td>0</td><td>round-0</td><td class="score-mid">0.688</td><td class="score-high">1.00 (19/19)</td><td class="score-high">1.00 (19/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-high">0.89 (17/19)</td><td class="score-high">1.00 (19/19)</td><td class="score-high">0.98 (19/19)</td><td>$0.0024</td></tr>
+<tr><td>1</td><td>round-1</td><td class="score-mid">0.687</td><td class="score-high">1.00 (19/19)</td><td class="score-high">1.00 (19/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-high">0.89 (17/19)</td><td class="score-high">0.99 (19/19)</td><td class="score-high">0.98 (19/19)</td><td>$0.0031</td></tr>
+<tr><td>2</td><td>round-2</td><td class="score-mid">0.699</td><td class="score-high">1.00 (19/19)</td><td class="score-high">1.00 (19/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-low">0.00 (0/19)</td><td class="score-high">1.00 (19/19)</td><td class="score-high">0.99 (19/19)</td><td class="score-high">0.99 (19/19)</td><td>$0.0033</td></tr>
+</tbody></table>
+
+<h2>📈 Optimization History & Progress</h2>
+<div class="history-card">
+  <p class="history-desc">
+    Visualizes score progression across optimization rounds. Each bar represents the prompt candidate's <strong>overall mean score</strong> (scaled 0.000 to 1.000 / 0% to 100%) across all test cases. Higher scores indicate closer alignment with rubric criteria.
+  </p>
+  <div class="history-legend">
+    <div class="legend-item"><span class="legend-swatch bar-high"></span> <strong>High (≥ 0.80)</strong> — Target quality</div>
+    <div class="legend-item"><span class="legend-swatch bar-mid"></span> <strong>Moderate (0.50 – 0.79)</strong> — Needs refinement</div>
+    <div class="legend-item"><span class="legend-swatch bar-low"></span> <strong>Low (&lt; 0.50)</strong> — High failure rate</div>
+    <div class="legend-item"><span class="legend-target-line"></span> <strong>Target Goal (0.95 / 95%)</strong></div>
+  </div>
+  <div class="round-history-list">
+<div class="round-card">
+  <div class="round-card-header">
+    <div class="round-title">
+      <span class="round-badge">Round 0</span>
+      <span class="candidate-pill">round-0</span>
+      <span class="baseline-pill">Baseline</span>
+    </div>
+    <div class="round-metrics">
+      <span class="metric-score">Score: <strong>0.688</strong> <span class="metric-percent">(68.8%)</span></span>
+      <span class="delta-pill delta-neutral" title="Baseline prompt (Round 0)">Baseline</span>
+      <span class="metric-criteria" title="Criteria completely passed">Criteria: <strong>4/8</strong> passed</span>
+      <span class="metric-cost">Cost: $0.0024</span>
+    </div>
+  </div>
+
+  <div class="bar-track-wrapper">
+    <div class="bar-track">
+      <div class="bar-fill bar-mid" style="width: 69%;" title="Round 0 (round-0): Mean score 0.688 (68.8%)">
+        <span class="bar-label inside">0.688 (68.8%)</span>
+      </div>
+      
+      <div class="target-line" style="left: 95.0%;" title="Target Goal: 0.95 (95%)"></div>
+    </div>
+  </div>
+
+  
+</div>
+<div class="round-card">
+  <div class="round-card-header">
+    <div class="round-title">
+      <span class="round-badge">Round 1</span>
+      <span class="candidate-pill">round-1</span>
+      
+    </div>
+    <div class="round-metrics">
+      <span class="metric-score">Score: <strong>0.687</strong> <span class="metric-percent">(68.7%)</span></span>
+      <span class="delta-pill delta-negative" title="Regression compared to baseline">▼ -0.001 (-0.1%) vs R0</span>
+      <span class="metric-criteria" title="Criteria completely passed">Criteria: <strong>4/8</strong> passed</span>
+      <span class="metric-cost">Cost: $0.0031</span>
+    </div>
+  </div>
+
+  <div class="bar-track-wrapper">
+    <div class="bar-track">
+      <div class="bar-fill bar-mid" style="width: 69%;" title="Round 1 (round-1): Mean score 0.687 (68.7%)">
+        <span class="bar-label inside">0.687 (68.7%)</span>
+      </div>
+      
+      <div class="target-line" style="left: 95.0%;" title="Target Goal: 0.95 (95%)"></div>
+    </div>
+  </div>
+
+  <div class="round-changelog">
+  <strong>Mutation:</strong> Added explicit fallback for missing due_date (use invoice date +30 days or default 2025-01-01) to fix [Missing or fabricated due_date when source lacks due date]. Added explicit fallbacks for missing invoice_number (empty string) and missing line_items (empty array) to fix [Empty required fields for missing data]. Note: The systematic failures on format criteria are evaluation-side issues and cannot be fixed by prompt changes.
+</div>
+</div>
+<div class="round-card">
+  <div class="round-card-header">
+    <div class="round-title">
+      <span class="round-badge">Round 2</span>
+      <span class="candidate-pill">round-2</span>
+      
+    </div>
+    <div class="round-metrics">
+      <span class="metric-score">Score: <strong>0.699</strong> <span class="metric-percent">(69.9%)</span></span>
+      <span class="delta-pill delta-positive" title="Improvement over baseline">▲ +0.011 (+1.1%) vs R0</span> <span class="delta-prev" title="Change vs previous round">(▲ +0.012 vs R1)</span>
+      <span class="metric-criteria" title="Criteria completely passed">Criteria: <strong>5/8</strong> passed</span>
+      <span class="metric-cost">Cost: $0.0033</span>
+    </div>
+  </div>
+
+  <div class="bar-track-wrapper">
+    <div class="bar-track">
+      <div class="bar-fill bar-mid" style="width: 70%;" title="Round 2 (round-2): Mean score 0.699 (69.9%)">
+        <span class="bar-label inside">0.699 (69.9%)</span>
+      </div>
+      
+      <div class="target-line" style="left: 95.0%;" title="Target Goal: 0.95 (95%)"></div>
+    </div>
+  </div>
+
+  <div class="round-changelog">
+  <strong>Mutation:</strong> Added explicit instruction that total_amount must be a JSON number, not a string, to ensure the model outputs a numeric type and thus passes the total-amount-numeric check. The rest of the prompt remains unchanged.
+</div>
+</div>
+    <div class="history-axis">
+      <div class="axis-scale">
+        <div class="axis-mark mark-start"><span>0.0 (0%)</span></div>
+        <div class="axis-mark" style="left: 25%;"><span>0.25 (25%)</span></div>
+        <div class="axis-mark" style="left: 50%;"><span>0.50 (50%)</span></div>
+        <div class="axis-mark" style="left: 75%;"><span>0.75 (75%)</span></div>
+        <div class="axis-mark mark-end"><span>1.0 (100%)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>🔒 Held-Out Validation</h2>
+<table>
+  <tr><th></th><th>Original</th><th>Optimized</th><th>Δ</th></tr>
+  <tr>
+    <td>Held-out score</td>
+    <td>0.000</td>
+    <td class="score-low">0.000</td>
+    <td>+0.000</td>
+  </tr>
+</table>
+<p class="good">Overfit gap: +0.011
+ ✅ Gap is within acceptable range.</p>
+<h2>⚖️ Confidence Statement</h2>
+<ul>
+  <li>Scores are based on a small test set and should be interpreted as directional, not exact.</li>
+  <li>The LLM judge may have biases (e.g. favoring longer/more polished outputs). Deterministic checks mitigate this where possible.</li>
+</ul>
+<script>
+  function copyPrompt(elementId, btn) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const text = el.innerText;
+    const fallback = () => {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showCopied(btn);
+      } catch (e) {
+        console.error('Copy fallback failed', e);
+      }
+      document.body.removeChild(textarea);
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showCopied(btn)).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  function showCopied(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<span>✅ Copied!</span>';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = orig;
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+</script>
+</body></html>

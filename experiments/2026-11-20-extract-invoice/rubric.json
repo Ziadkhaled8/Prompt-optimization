@@ -1,0 +1,72 @@
+{
+  "taskDescription": "Extract structured invoice fields (invoice number, vendor name, total amount, due date, and line items) from raw invoice text and return them as a bare, valid JSON object with no preamble or markdown fences.",
+  "expectedOutputShape": "A single valid JSON object (no surrounding prose or code fences) with keys: invoice_number (string), vendor_name (string), total_amount (number), due_date (string in YYYY-MM-DD), line_items (array of objects each having description (string) and amount (number)).",
+  "expectedInputTypes": "Plain-text invoice document passed via the {{invoice_text}} placeholder, containing unstructured or semi-structured billing information (headers, totals, dates, itemized charges).",
+  "criteria": [
+    {
+      "id": "json-valid",
+      "description": "The response body parses as valid JSON with a single top-level object.",
+      "type": 0,
+      "weight": 0.2,
+      "hardFail": true,
+      "checkConfig": null
+    },
+    {
+      "id": "required-fields",
+      "description": "The JSON object contains all five required keys: invoice_number, vendor_name, total_amount, due_date, line_items.",
+      "type": 0,
+      "weight": 0.2,
+      "hardFail": true,
+      "checkConfig": "invoice_number,vendor_name,total_amount,due_date,line_items"
+    },
+    {
+      "id": "no-markdown-fence",
+      "description": "The output does not wrap the JSON in markdown code fences.",
+      "type": 0,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": "\u0060\u0060\u0060,~~~"
+    },
+    {
+      "id": "no-conversational-preamble",
+      "description": "The output begins directly with the JSON object, with no conversational lead-in such as \u0027Here is\u0027 or \u0027Sure\u0027.",
+      "type": 0,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": "Here is,Here\u0027s,Sure,Certainly,I\u0027ve extracted,Below is"
+    },
+    {
+      "id": "total-amount-numeric",
+      "description": "total_amount is emitted as a JSON number (not a string, not containing currency symbols or thousands separators).",
+      "type": 0,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": null
+    },
+    {
+      "id": "due-date-format",
+      "description": "due_date is a string strictly formatted as YYYY-MM-DD and represents the due date stated or implied in the invoice text.",
+      "type": 1,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": null
+    },
+    {
+      "id": "line-items-structure",
+      "description": "line_items is an array of objects, each containing exactly the description (string) and amount (numeric) fields, with all itemized charges from the source captured.",
+      "type": 1,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": null
+    },
+    {
+      "id": "extraction-faithfulness",
+      "description": "All extracted values (invoice number, vendor name, total amount, due date, line item descriptions and amounts) match the source invoice text without fabrication, hallucination, or omission of material values.",
+      "type": 1,
+      "weight": 0.1,
+      "hardFail": false,
+      "checkConfig": null
+    }
+  ],
+  "approved": true
+}

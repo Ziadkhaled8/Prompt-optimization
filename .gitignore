@@ -1,0 +1,25 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Sensitive and environment-specific settings
+appsettings.local.json
+appsettings.Development.json
+*.local.json
+*.env
+
+# Operating System files
+.DS_Store
+Thumbs.db
